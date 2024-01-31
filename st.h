@@ -65,6 +65,9 @@ enum glyph_attribute {
 	#if UNDERCURL_PATCH
 	ATTR_DIRTYUNDERLINE = 1 << 15,
 	#endif // UNDERCURL_PATCH
+	#if SELECTION_COLORS_PATCH
+	ATTR_SELECTED   = 1 << 16,
+	#endif // SELECTION_COLORS_PATCH
 };
 
 #if SIXEL_PATCH
@@ -125,7 +128,11 @@ typedef XftGlyphFontSpec GlyphFontSpec;
 #define Glyph Glyph_
 typedef struct {
 	Rune u;           /* character code */
+	#if SELECTION_COLORS_PATCH
+	uint32_t mode;    /* attribute flags */
+	#else
 	ushort mode;      /* attribute flags */
+	#endif // SELECTION_COLORS_PATCH
 	uint32_t fg;      /* foreground  */
 	uint32_t bg;      /* background  */
 	#if UNDERCURL_PATCH
